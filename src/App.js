@@ -1,25 +1,47 @@
-import logo from './logo.svg';
-import './App.css';
+import "./App.css";
+import { EnrollmentForm } from "./components/EnrollmentForm";
+import Home from "./components/Home";
+import { Route, Routes } from "react-router-dom";
+import PageNotFound from "./components/PageNotFound";
+import React, { useState, useEffect, createContext } from "react";
+import ShowMessage from "./components/ShowMessage";
+import Query from "./components/Query";
+const authenticate = createContext();
 
 function App() {
+  const [login, setLogin] = useState(false);
+  const handleIsLogin = () => {
+    setLogin(!login);
+  };
+
+  useEffect(() => {
+    setLogin(JSON.parse(localStorage.getItem("login")));
+  }, [login]);
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <>
+      <authenticate.Provider value={[handleIsLogin]}>
+        <div className="container-fluid">
+          <Routes>
+            <Route path="/" exact element={<Home />} />
+            {login && (
+              <Route
+                path="/EnrollmentForm"
+                exact
+                element={<EnrollmentForm />}
+              />
+            )}
+            {login && (
+              <Route path="/ShowMessage" exact element={<ShowMessage />} />
+            )}
+            {login && <Route path="/Query" exact element={<Query />} />}
+            <Route path="*" exact element={<PageNotFound />} />
+          </Routes>
+        </div>
+      </authenticate.Provider>
+    </>
   );
 }
 
 export default App;
+export { authenticate };

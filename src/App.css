@@ -36,3 +36,19 @@
     transform: rotate(360deg);
   }
 }
+.form-home{
+  width: 600px;
+  height: 250px;
+  background-color: bisque;
+  align-items: center;
+  justify-content: center;
+  position: fixed;
+  top: 20%;
+  left: 20%;
+}
+.form-enroll{
+  background-color: bisque;
+  width: 1200px;
+  height: fit-content;
+
+}
